@@ -1,0 +1,26 @@
+:ems:
+  :ems_minio:
+    :blacklisted_event_names: []
+    :event_handling:
+      :event_groups:
+:ems_refresh:
+  :minio:
+    :refresh_interval: 15.minutes
+:http_proxy:
+  :minio:
+    :host:
+    :password:
+    :port:
+    :user:
+:log:
+  :level_minio: info
+:workers:
+  :worker_base:
+    :event_catcher:
+      :event_catcher_minio:
+        :poll: 20.seconds
+    :queue_worker_base:
+      :ems_metrics_collector_worker:
+        :ems_metrics_collector_worker_minio: {}
+      :ems_refresh_worker:
+        :ems_refresh_worker_minio: {}
