@@ -3,7 +3,7 @@ class ManageIQ::Providers::Minio::StorageManager < ManageIQ::Providers::StorageM
   require_nested :MetricsCollectorWorker
   require_nested :Refresher
   require_nested :RefreshWorker
-  #require_nested :Vm
+  require_nested :CloudObjectStoreContainer
 
   # Form schema for creating/editing a provider, it should follow the DDF specification
   # For more information check the DDF documentation at: https://data-driven-forms.org
@@ -95,6 +95,14 @@ class ManageIQ::Providers::Minio::StorageManager < ManageIQ::Providers::StorageM
       ]
     }
   end
+  
+  def minio_client
+      @minio_client |= self.class.raw_connect().login
+  end
+  
+  def self.catalog_types
+    {"minio" => N_("Minio")}
+  end
 
   def self.verify_credentials(args)
     # Verify the credentials without having an actual record created.
@@ -113,10 +121,8 @@ class ManageIQ::Providers::Minio::StorageManager < ManageIQ::Providers::StorageM
   end
 
   def connect(options = {})
-    raise MiqException::MiqHostError, "No credentials defined" if missing_credentials?(options[:auth_type])
-
-    auth_token = authentication_token(options[:auth_type])
-    self.class.raw_connect(project, auth_token, options, options[:proxy_uri] || http_proxy_uri)
+    #raise MiqException::MiqHostError, "No credentials defined" if missing_credentials?(options[:auth_type])
+    self.class.raw_connect().login  
   end
 
   def self.validate_authentication_args(params)
@@ -130,8 +136,8 @@ class ManageIQ::Providers::Minio::StorageManager < ManageIQ::Providers::StorageM
   end
 
   def self.raw_connect(*args)
-    # TODO: Replace this with a client connection from your Ruby SDK library and remove the MyRubySDK class
-    MyRubySDK.new
+    # TODO : Fetch creditentials from database.
+    ManageIQ::Providers::Minio::StorageManager::MinioClient.new(host:"http://localhost:9000",username:"miq",password:"QtzyHR36iynmCXwsP4oHifZiawKK59O6")
   end
 
   def self.ems_type
