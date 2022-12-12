@@ -7,6 +7,9 @@
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq-providers-minio?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ManageIQ plugin for the Minio provider.
+Plugin enables us to observe the state of object storage containers.
+In the current state it enables fetching of all buckets from given MINIO server, which are then shown in ManageIQ dashboard.
+Using the steps, we can implement posibility to present other volume based cloud storage solutions. 
 
 ## Setup
 
