@@ -8,6 +8,20 @@
 
 ManageIQ plugin for the Minio provider.
 
+## Setup
+
+1. Clone this repo into `manageiq/plugins` folder 
+2. Create file named `local_plugins.rb` in `bundler.d` directory: `echo "override_gem "manageiq-providers-minio", :path => "../plugins/manageiq-providers-minio""> bundler.d/local_plugins.rb `
+3. Add the following lines into `Gemfile`:
+  ```
+  group :minio, :manageiq_default do
+    manageiq_plugin "manageiq-providers-minio"
+    gem "aws-sdk"
+  end
+  ```
+4. Run `bundle update`
+5. Run `bundle exec rails console`
+ 
 ## Development
 
 See the section on plugins in the [ManageIQ Developer Setup](http://manageiq.org/docs/guides/developer_setup/plugins)
